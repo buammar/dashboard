@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#4338ca">
+  <meta name="description" content="داشبورد مدیریتی هنرستان پیشرو شهر سوزا">
+  <title>داشبورد مدیریتی هنرستان پیشرو</title>
+
+  <!-- ===== آیکون‌ها مستقیماً از ریشه مخزن GitHub ===== -->
+  <link rel="icon" type="image/png" sizes="192x192"
+        href="https://raw.githubusercontent.com/buammar/dashboard/main/icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512"
+        href="https://raw.githubusercontent.com/buammar/dashboard/main/icon-512.png">
+  <link rel="apple-touch-icon" sizes="192x192"
+        href="https://raw.githubusercontent.com/buammar/dashboard/main/icon-192.png">
+
+  <link rel="manifest" href="./manifest.webmanifest">
+
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;font-family:Tahoma,sans-serif;background:#eef2ff}
+    #app{height:100%;display:flex;flex-direction:column}
+    #notice{padding:12px 16px;background:#fff7ed;color:#9a3412;text-align:center;line-height:1.9;font-size:14px}
+    #frame{border:0;width:100%;height:100%;flex:1;background:#fff}
+    .hidden{display:none!important}
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="notice" class="hidden"></div>
+    <iframe id="frame" title="داشبورد مدیریتی هنرستان پیشرو" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+  </div>
+
+  <script src="./config.js"></script>
+  <script>
+    (function(){
+      const url = window.APP_CONFIG && String(window.APP_CONFIG.GAS_URL || "").trim();
+      const note = document.getElementById("notice");
+      const frame = document.getElementById("frame");
+
+      if(!url || url.includes("PASTE_YOUR_GAS_WEB_APP_URL_HERE")){
+        note.textContent = "ابتدا فایل config.js را باز کنید و نشانی انتشار وب‌اپ Google Apps Script را در قسمت GAS_URL قرار دهید.";
+        note.classList.remove("hidden");
+        frame.remove();
+        return;
+      }
+      if(!/^https:\/\/script\.google\.com\/macros\/s\/.+\/exec(?:\?.*)?$/.test(url)){
+        note.textContent = "نشانی GAS_URL معتبر به نظر نمی‌رسد. نشانی Web app که با /exec تمام می‌شود وارد کنید.";
+        note.classList.remove("hidden");
+        frame.remove();
+        return;
+      }
+      const sep = url.includes("?") ? "&" : "?";
+      frame.src = url + sep + "page=dashboard";
+    })();
+
+    if("serviceWorker" in navigator){
+      window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+    }
+  </script>
+</body>
+</html>
