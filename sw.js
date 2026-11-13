@@ -1,4 +1,4 @@
-const CACHE_NAME = "pishro-dashboard-shell-v4";
+const CACHE_NAME = "pishro-dashboard-shell-v5";
 
 /* آیکون‌ها مستقیماً از ریشه مخزن GitHub */
 const ICON_BASE = "https://raw.githubusercontent.com/buammar/dashboard/main/";
